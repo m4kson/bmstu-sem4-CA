@@ -9,9 +9,11 @@ if __name__ == "__main__":
     print_menu()
     menu_step = -1
     while menu_step != 0:
-        menu_step = int(input("Enter: "))
+        menu_step = int(input("Enter menu number: "))
         if menu_step == 1:
             pointTable = sp.read_table("./data/test_1.txt")
-            x = int(input("Enter x: "))
+            sp.print_pointTable(pointTable)
+            x = float(input("Enter x: "))
+
 
 
