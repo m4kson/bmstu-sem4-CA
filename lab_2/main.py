@@ -1,3 +1,6 @@
+import spline as sp
+
+
 def print_menu():
     print("\n\t\t===menu==="
           "\n1. print hello")
@@ -8,4 +11,7 @@ if __name__ == "__main__":
     while menu_step != 0:
         menu_step = int(input("Enter: "))
         if menu_step == 1:
-            print("hello")
+            pointTable = sp.read_table("./data/test_1.txt")
+            x = int(input("Enter x: "))
+
+
