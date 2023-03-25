@@ -122,6 +122,56 @@ def teta(fi, teta_i, ksi_i, h1, h2):
     return (fi - h1 * teta_i) / (h1 * ksi_i + 2 * (h2 + h1))
 
 def findBValues(xValues, yValues, cValues):
-    pass
+    bValues = list()
+    for i in range(1, len(xValues) - 1):
+        hi = xValues[i] - xValues[i - 1]
+        bValues.append(B(yValues[i - 1], yValues[i], cValues[i - 1], cValues[i], hi))
 
-def B()
+    hi = xValues[-1] - xValues[-2]
+    bValues.append(B(yValues[-2], yValues[-1], 0, cValues[-1], hi))
+
+    return bValues
+
+
+def findDValues(xValues, cValues):
+    dValues = []
+
+    size = len(xValues)
+
+    for i in range(1, size - 1):
+        hi = xValues[i] - xValues[i - 1]
+        dValues.append(D(cValues[i], cValues[i - 1], hi))
+
+    hi = xValues[-1] - xValues[-2]
+    dValues.append(D(0, cValues[-1], hi))
+
+    return dValues
+
+def D(c1, c2, hi):
+    return (c1 - c2) / (3 * hi)
+
+# y1 = y_i-1
+# y2 = y_i
+# hi
+# c1 = c_i+1
+# c2 = c_i
+def B(y1, y2, c1, c2, hi):
+    return (y2 - y1) / hi - (hi * (c2 + 2 * c1) / 3)
+
+def countPolynom(x, xValues, index, coefs):
+    h = x - xValues[index]
+    y = 0
+
+    for i in range(4):
+        y += coefs[i][index] * (h ** i)
+
+    return y
+
+def finedIndex(xValues, x):
+    size = len(xValues)
+    index = 1
+
+    while index < size and xValues[index] < x:
+        index += 1
+
+    return index - 1
