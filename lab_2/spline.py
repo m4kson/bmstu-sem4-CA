@@ -26,10 +26,13 @@ def spline(table, x, start, end):
     xValues = [i.getX() for i in table]
     yValues = [i.getY() for i in table]
 
+    #находим коэффициенты для Ф(x) = a + b * (x - x_0) + c * (x - x_0)^2 + d * (x - x_0)^3
     coeffs = calculateCoefs(xValues, yValues, start, end)
 
+    #находим индекс табличного икса ближайшего к заданному иксу
     index = finedIndex(xValues, x)
 
+    #Вычисляем апроксимированную ф-цию
     y = countPolynom(x, xValues, index, coeffs)
 
     return y
