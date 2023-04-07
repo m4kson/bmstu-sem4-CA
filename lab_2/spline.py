@@ -1,4 +1,5 @@
 from point_class import Point
+from NewtonePolynom import *
 
 def read_table(filename):
     file = open(filename, "r")
@@ -58,17 +59,17 @@ def findCValues(xValues, yValues, start, end):
     sizeX = len(xValues)
 
     cValues = [0] * (sizeX - 1)
-    cValues[0] = start
-    cValues[1] = end
+    cValues[0] = start / 2
+    cValues[-1] = end / 2
     if start == 0 and end == 0:
         ksiValues = [0, 0]
         tetaValues = [0, 0]
-    elif start == 0:
-        ksiValues = [0, end / 2]
-        tetaValues = [0, end / 2]
+    elif end == 0:
+        ksiValues = [0, start / 2]
+        tetaValues = [0, start / 2]
     else:
-        ksiValues = [start / 2, end / 2]
-        tetaValues = [start / 2, end / 2]
+        ksiValues = [start / 2, start / 2]
+        tetaValues = [start / 2, start / 2]
 
     for i in range(2, sizeX):
         h2 = xValues[i] - xValues[i - 1]  # hi
@@ -81,7 +82,9 @@ def findCValues(xValues, yValues, start, end):
         ksiValues.append(ksiCur)
         tetaValues.append(tetaCur)
 
-    cValues[-1] = tetaValues[-1]
+    #cValues[-1] = tetaValues[-1]
+    cValues[-1] = end / 2
+    cValues[0]  = start / 2
 
     for i in range(sizeX - 2, 0, -1):
         cValues[i - 1] = C(cValues[i], ksiValues[i], tetaValues[i])
@@ -178,3 +181,12 @@ def finedIndex(xValues, x):
         index += 1
 
     return index - 1
+
+def derivativeNewtonePolynom(pointTable, n, x):
+    index = getIndex(pointTable, x)
+    newPointTable = getWorkingPoints(pointTable, index, n + 1)
+    newtoneTable = NewtoneTableCreate(newPointTable, n)
+
+    derivative = 2 * newtoneTable[0][3] + newtoneTable[0][4] * (6 * x - 2 * (newPointTable[0].x + newPointTable[1].x + newPointTable[2].x))
+
+    return derivative
