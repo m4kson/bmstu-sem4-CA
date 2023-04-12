@@ -45,21 +45,21 @@ if __name__ == "__main__":
 
 
 
-            print("Cплайн 0 and 0:      {:>50}".format(sp.spline(pointTable, x, start1, end1)))
-            print("Cплайн P'' and 0:    {:>50}".format(sp.spline(pointTable, x, start2, end2)))
-            print("Cплайн P'' and P'':  {:>50}".format(sp.spline(pointTable, x, start3, end3)))
+            print("Cплайн 0 and 0:          {:>10}".format(sp.spline(pointTable, x, start1, end1)))
+            print("Cплайн P'' and 0:        {:>10}".format(sp.spline(pointTable, x, start2, end2)))
+            print("Cплайн P'' and P'':      {:>10}".format(sp.spline(pointTable, x, start3, end3)))
 
             x_s = [i.getX() for i in pointTable]
             y_s = [i.getY() for i in pointTable]
             tck = interpolate.splrep(x_s, y_s)
 
-            print("Spline with sci py: {:>50}".format(interpolate.splev(x, tck)))
+            print("Spline with sci py:      {:>10}".format(interpolate.splev(x, tck), 3))
 
             index = getIndex(pointTable, x)
             newPointTable = getWorkingPoints(pointTable, index, n + 1)
             newtoneTable = NewtoneTableCreate(newPointTable, n)
 
-            print("Полином Ньютона: ", NewtonePolyCount(newtoneTable, x))
+            print("Полином Ньютона:         {:>10}".format(NewtonePolyCount(newtoneTable, x)))
 
         if menu_step == 2:
             pointTable = sp.read_table("./data/test_1.txt")
@@ -91,7 +91,7 @@ if __name__ == "__main__":
             y_s = []
             y_sss = []
 
-            for i in arange(pointTable[0].getX(), pointTable[len(pointTable) - 1].getX(), 0.1):
+            for i in arange(pointTable[0].getX(), pointTable[len(pointTable) - 1].getX(), 0.01):
                 x_s.append(i)
                 y_s.append(sp.spline(pointTable, i, start1, end1))
 
@@ -100,13 +100,13 @@ if __name__ == "__main__":
 
             y_s.clear()
 
-            for i in arange(pointTable[0].getX(), pointTable[len(pointTable) - 1].getX(), 0.1):
+            for i in arange(pointTable[0].getX(), pointTable[len(pointTable) - 1].getX(), 0.01):
                 y_s.append(sp.spline(pointTable, i, start2, end2))
 
             ax.plot(x_s, y_s, color='red')
 
             y_s.clear()
-            for i in arange(pointTable[0].getX(), pointTable[len(pointTable) - 1].getX(), 0.1):
+            for i in arange(pointTable[0].getX(), pointTable[len(pointTable) - 1].getX(), 0.01):
                 y_s.append(sp.spline(pointTable, i, start3, end3))
 
             ax.plot(x_s, y_s, color='blue')
@@ -115,8 +115,18 @@ if __name__ == "__main__":
             y_ss = [i.getY() for i in pointTable]
             tck = interpolate.splrep(x_ss, y_ss)
 
-            for i in arange(pointTable[0].getX(), pointTable[len(pointTable) - 1].getX(), 0.1):
+            for i in arange(pointTable[0].getX(), pointTable[len(pointTable) - 1].getX(), 0.01):
                 y_sss.append(interpolate.splev(i, tck))
+
+            y_s.clear()
+            pointTable.sort(key=lambda point: point.x)
+            for i in arange(pointTable[0].getX(), pointTable[len(pointTable) - 1].getX(), 0.01):
+                index = getIndex(pointTable, i)
+                newPointTable = getWorkingPoints(pointTable, index, n + 1)
+                newtoneTable = NewtoneTableCreate(newPointTable, n)
+                y_s.append(NewtonePolyCount(newtoneTable, i))
+
+            ax.plot(x_s, y_s, color='purple')
 
             ax.plot(x_s, y_sss, color='black')
             plt.legend()
