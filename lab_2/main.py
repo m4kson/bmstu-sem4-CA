@@ -79,7 +79,7 @@ if __name__ == "__main__":
             end3 = 0
 
             if len(pointTable) > n:
-                end2 = sp.derivativeNewtonePolynom(pointTable, n, pointTable[-1].x)
+                start2 = sp.derivativeNewtonePolynom(pointTable, n, pointTable[0].x)
                 start3 = sp.derivativeNewtonePolynom(pointTable, n, pointTable[0].x)
                 end3 = sp.derivativeNewtonePolynom(pointTable, n, pointTable[-1].x)
 
@@ -126,7 +126,7 @@ if __name__ == "__main__":
                 newtoneTable = NewtoneTableCreate(newPointTable, n)
                 y_s.append(NewtonePolyCount(newtoneTable, i))
 
-            ax.plot(x_s, y_s, color='purple')
+            ax.plot(x_s, y_s, ':', color='purple')
 
             ax.plot(x_s, y_sss, color='black')
             plt.legend()

@@ -84,7 +84,6 @@ def findCValues(xValues, yValues, start, end):
 
     #cValues[-1] = tetaValues[-1]
     cValues[-1] = end / 2
-    cValues[0]  = start / 2
 
     for i in range(sizeX - 2, 0, -1):
         cValues[i - 1] = C(cValues[i], ksiValues[i], tetaValues[i])
