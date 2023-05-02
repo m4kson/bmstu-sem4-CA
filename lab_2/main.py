@@ -131,4 +131,3 @@ if __name__ == "__main__":
             #ax.plot(x_s, y_sss, color='black')
             plt.legend()
             plt.show()
-            
