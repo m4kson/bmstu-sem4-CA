@@ -17,7 +17,7 @@ if __name__ == "__main__":
     while menu_step != 0:
         menu_step = int(input("Enter menu number: "))
         if menu_step == 1:
-            pointTable = sp.read_table("./data/test_1.txt")
+            pointTable = sp.read_table("./data/test_4.txt")
             sp.print_pointTable(pointTable)
 
             x = float(input("Enter x: "))
@@ -62,7 +62,7 @@ if __name__ == "__main__":
             print("Полином Ньютона:         {:>10}".format(NewtonePolyCount(newtoneTable, x)))
 
         if menu_step == 2:
-            pointTable = sp.read_table("./data/test_1.txt")
+            pointTable = sp.read_table("./data/test_4.txt")
             sp.print_pointTable(pointTable)
 
             n = 3
@@ -113,24 +113,22 @@ if __name__ == "__main__":
 
             x_ss = [i.getX() for i in pointTable]
             y_ss = [i.getY() for i in pointTable]
-            tck = interpolate.splrep(x_ss, y_ss)
+            #tck = interpolate.splrep(x_ss, y_ss)
 
-            for i in arange(pointTable[0].getX(), pointTable[len(pointTable) - 1].getX(), 0.01):
-                y_sss.append(interpolate.splev(i, tck))
+            # for i in arange(pointTable[0].getX(), pointTable[len(pointTable) - 1].getX(), 0.01):
+            #     y_sss.append(interpolate.splev(i, tck))
 
-            y_s.clear()
-            pointTable.sort(key=lambda point: point.x)
-            for i in arange(pointTable[0].getX(), pointTable[len(pointTable) - 1].getX(), 0.01):
-                index = getIndex(pointTable, i)
-                newPointTable = getWorkingPoints(pointTable, index, n + 1)
-                newtoneTable = NewtoneTableCreate(newPointTable, n)
-                y_s.append(NewtonePolyCount(newtoneTable, i))
+            # y_s.clear()
+            # pointTable.sort(key=lambda point: point.x)
+            # for i in arange(pointTable[0].getX(), pointTable[len(pointTable) - 1].getX(), 0.01):
+            #     index = getIndex(pointTable, i)
+            #     newPointTable = getWorkingPoints(pointTable, index, n + 1)
+            #     newtoneTable = NewtoneTableCreate(newPointTable, n)
+            #     y_s.append(NewtonePolyCount(newtoneTable, i))
+            #
+            # ax.plot(x_s, y_s, ':', color='purple')
 
-            ax.plot(x_s, y_s, ':', color='purple')
-
-            ax.plot(x_s, y_sss, color='black')
+            #ax.plot(x_s, y_sss, color='black')
             plt.legend()
             plt.show()
-
-
-
+            

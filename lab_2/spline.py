@@ -72,8 +72,8 @@ def findCValues(xValues, yValues, start, end):
         tetaValues = [start / 2, start / 2]
 
     for i in range(2, sizeX):
-        h2 = xValues[i] - xValues[i - 1]  # hi
-        h1 = xValues[i - 1] - xValues[i - 2]  # hi-1
+        h2 = xValues[i] - xValues[i - 1]
+        h1 = xValues[i - 1] - xValues[i - 2]
 
         fiCur = fi(yValues[i - 2], yValues[i - 1], yValues[i], h1, h2)
         ksiCur = ksi(ksiValues[i - 1], h1, h2)
@@ -81,9 +81,6 @@ def findCValues(xValues, yValues, start, end):
 
         ksiValues.append(ksiCur)
         tetaValues.append(tetaCur)
-
-    #cValues[-1] = tetaValues[-1]
-    cValues[-1] = end / 2
 
     for i in range(sizeX - 2, 0, -1):
         cValues[i - 1] = C(cValues[i], ksiValues[i], tetaValues[i])
